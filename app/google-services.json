@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1023293820682",
+    "project_id": "gen-auto-test",
+    "storage_bucket": "gen-auto-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023293820682:android:d9d93b511fc96c2549f4f3",
+        "android_client_info": {
+          "package_name": "com.ruchanokal.carinstructions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023293820682-hfhq9a6vphoc1f2updvq2ko4n6cc5vls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGmj1JHP1pvYgd3OJAlOsKFPp3GjVz3ZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023293820682-hfhq9a6vphoc1f2updvq2ko4n6cc5vls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

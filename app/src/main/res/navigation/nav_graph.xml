@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/kurulumFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_talimatFragment"
+            app:destination="@id/talimatFragment" />
+        <argument
+            android:name="savedlist"
+            app:argType="string[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/talimatFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.TalimatFragment"
+        android:label="fragment_talimatlar"
+        tools:layout="@layout/fragment_talimatlar" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="lang"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/kurulumFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.KurulumFragment"
+        android:label="fragment_kurulum"
+        tools:layout="@layout/fragment_kurulum" >
+        <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/nav_graph"
+            android:id="@+id/action_kurulumFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>
