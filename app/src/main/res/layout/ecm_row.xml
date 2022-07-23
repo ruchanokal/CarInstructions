@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:paddingVertical="10dp"
+    android:layout_marginHorizontal="2dp"
+    android:background="@drawable/ecmrowselector"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1.1"
+        android:text="Marka"
+        android:id="@+id/markaText"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1.3"
+        android:text="Araç Tipi"
+        android:id="@+id/aracTipiText"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:text="Araç Modeli"
+        android:id="@+id/aracModeliText"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1.3"
+        android:text="ECM"
+        android:id="@+id/ecmText"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+
+
+
+</LinearLayout>
