@@ -10,24 +10,15 @@
         android:name="com.ruchanokal.carinstructions.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_talimatFragment"
-            app:destination="@id/talimatFragment" />
         <argument
-            android:name="savedlist"
+            android:name="savedNamelist"
             app:argType="string[]" />
-    </fragment>
-    <fragment
-        android:id="@+id/talimatFragment"
-        android:name="com.ruchanokal.carinstructions.fragments.TalimatFragment"
-        android:label="fragment_talimatlar"
-        tools:layout="@layout/fragment_talimatlar" >
         <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="lang"
-            app:argType="string" />
+            android:name="savedImageList"
+            app:argType="string[]" />
+        <action
+            android:id="@+id/action_mainFragment_to_ECMFragment"
+            app:destination="@id/ECMFragment" />
     </fragment>
     <fragment
         android:id="@+id/kurulumFragment"
@@ -39,5 +30,47 @@
             app:popUpTo="@+id/nav_graph"
             android:id="@+id/action_kurulumFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ECMFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.ECMFragment"
+        android:label="fragment_e_c_m"
+        tools:layout="@layout/fragment_ecm">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="lang"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_ECMFragment_to_ECMDetailsFragment"
+            app:destination="@id/ECMDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ECMDetailsFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.ECMDetailsFragment"
+        android:label="fragment_ecm_details"
+        tools:layout="@layout/fragment_ecm_details" >
+        <argument
+            android:name="ecmModel"
+            app:argType="com.ruchanokal.carinstructions.model.ECM"/>
+        <argument
+            android:name="lang"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_ECMDetailsFragment_to_talimatFragment"
+            app:destination="@id/talimatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/talimatFragment"
+        android:name="com.ruchanokal.carinstructions.fragments.TalimatFragment"
+        android:label="fragment_talimatlar"
+        tools:layout="@layout/fragment_talimatlar" >
+        <argument
+            android:name="lang"
+            app:argType="string" />
+        <argument
+            android:name="ecm"
+            app:argType="string" />
     </fragment>
 </navigation>
