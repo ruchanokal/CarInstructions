@@ -6,13 +6,28 @@
     android:orientation="vertical"
     tools:context=".fragments.KurulumFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_marginTop="10dp"
-        android:id="@+id/recyclerViewKurulum"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center"/>
+        android:layout_height="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewKurulum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/mainProgressBar"/>
+
+
+    </FrameLayout>
+
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="wrap_content"
