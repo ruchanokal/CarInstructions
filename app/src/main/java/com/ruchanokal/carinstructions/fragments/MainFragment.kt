@@ -50,12 +50,18 @@ class MainFragment : Fragment() {
 
         arguments?.let {
 
-            val savedList = MainFragmentArgs.fromBundle(it).savedlist.toList()
+
+            val savedNameList = MainFragmentArgs.fromBundle(it).savedNamelist.toList()
+            val savedImageList = MainFragmentArgs.fromBundle(it).savedImageList.toList()
+
 
             binding!!.recyclerViewMain.layoutManager = LinearLayoutManager(requireContext())
-            adapter = MainRecyclerAdapter(savedList as ArrayList<String>,lang!!)
+            adapter = MainRecyclerAdapter(savedNameList as ArrayList<String>,
+                savedImageList as ArrayList<String>,lang!!)
             binding!!.recyclerViewMain.adapter = adapter
-            tinyDB.putListString("savedList",savedList)
+            tinyDB.putListString("savedNameArrayList",savedNameList)
+            tinyDB.putListString("savedImageArrayList",savedImageList)
+
             prefences.edit().putBoolean("control",true).apply()
 
             Log.i("MainFragment","control true")
