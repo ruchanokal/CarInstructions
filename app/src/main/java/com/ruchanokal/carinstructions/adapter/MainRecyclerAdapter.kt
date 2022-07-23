@@ -1,17 +1,18 @@
 package com.ruchanokal.carinstructions.adapter
 
 import android.R
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ruchanokal.carinstructions.databinding.MainRecyclerViewRowBinding
 import com.ruchanokal.carinstructions.fragments.MainFragmentDirections
 
 
-class MainRecyclerAdapter(val markaList : ArrayList<String>, val lang: String) : RecyclerView.Adapter<MainRecyclerAdapter.MainHolder>() {
+class MainRecyclerAdapter(val markaNameList : ArrayList<String>,
+                          val markaImageList : ArrayList<String>,
+                          val lang: String) : RecyclerView.Adapter<MainRecyclerAdapter.MainHolder>() {
 
 
     class MainHolder(val binding: MainRecyclerViewRowBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -27,11 +28,12 @@ class MainRecyclerAdapter(val markaList : ArrayList<String>, val lang: String) :
 
     override fun onBindViewHolder(holder: MainRecyclerAdapter.MainHolder, position: Int) {
 
-        holder.binding.mainButton.text = markaList.get(position)
+        holder.binding.markaName.text = markaNameList.get(position)
+        Glide.with(holder.itemView.context).load(markaImageList.get(position)).into(holder.binding.markaImage)
 
         holder.binding.mainButton.setOnClickListener {
 
-            val action = MainFragmentDirections.actionMainFragmentToTalimatFragment(markaList.get(position),lang)
+            val action = MainFragmentDirections.actionMainFragmentToECMFragment(markaNameList.get(position),lang)
             Navigation.findNavController(it).navigate(action)
 
 
@@ -40,6 +42,6 @@ class MainRecyclerAdapter(val markaList : ArrayList<String>, val lang: String) :
     }
 
     override fun getItemCount(): Int {
-        return markaList.size
+        return markaNameList.size
     }
 }
