@@ -4,4 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="createSystem">Create System</string>
+    <string name="en_az_bir_marka">You must choose at least one brand</string>
+    <string name="devam">devam</string>
 </resources>
