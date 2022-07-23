@@ -5,19 +5,38 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:id="@+id/mainButton"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:paddingVertical="5dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/border_button"
-        android:fontFamily="@font/montserrat_bold"
-        android:minEms="10"
-        android:textStyle="bold"
-        android:textColor="#131633"
-        android:textSize="20sp" />
+        >
 
+        <ImageView
+            android:layout_marginStart="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/markaImage"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:minEms="8"
+            android:textStyle="bold"
+            android:id="@+id/markaName"
+            android:textColor="#131633"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:textSize="19.5sp"
+            android:text="Markalar"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
