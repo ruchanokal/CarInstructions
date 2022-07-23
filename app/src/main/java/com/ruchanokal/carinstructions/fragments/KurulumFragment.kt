@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.ruchanokal.carinstructions.R
 import com.ruchanokal.carinstructions.activities.MainActivity
 import com.ruchanokal.carinstructions.adapter.KurulumRecyclerAdapter
@@ -25,11 +28,15 @@ class KurulumFragment : Fragment(),OnTextClickListener {
     private var binding: FragmentKurulumBinding? = null
     private val TAG = "KurulumFragment"
 
-    val markaKurulumArrayList : ArrayList<String> = ArrayList()
-    var savedArrayList = arrayListOf<String>()
+    val markaKurulumNameList : ArrayList<String> = ArrayList()
+    val markaKurulumImageList : ArrayList<String> = ArrayList()
+
+    var savedNameArrayList = arrayListOf<String>()
+    var savedImageArrayList = arrayListOf<String>()
 
     private lateinit var db : FirebaseFirestore
     var adapter : KurulumRecyclerAdapter? = null
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -52,35 +59,61 @@ class KurulumFragment : Fragment(),OnTextClickListener {
         if (control) {
 
             val tinyDB = TinyDB(requireContext())
-            savedArrayList = tinyDB.getListString("savedList")
+            savedNameArrayList = tinyDB.getListString("savedNameArrayList")
+            savedImageArrayList = tinyDB.getListString("savedImageArrayList")
 
             val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
             val navController = navHostFragment.navController
 
             val action = KurulumFragmentDirections
-                .actionKurulumFragmentToMainFragment(savedArrayList.toTypedArray())
+                .actionKurulumFragmentToMainFragment(savedNameArrayList.toTypedArray()
+                    ,savedImageArrayList.toTypedArray())
             navController.navigate(action)
             return
 
         }
         Log.i(TAG,"after control")
 
+        auth = Firebase.auth
 
-        db = FirebaseFirestore.getInstance()
+        auth.signInAnonymously()
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInAnonymously:success")
 
-        getDataFromFirestore()
+                    db = FirebaseFirestore.getInstance()
+                    getDataFromFirestore()
 
+                    binding!!.recyclerViewKurulum.layoutManager = LinearLayoutManager(requireContext())
+                    adapter = KurulumRecyclerAdapter(markaKurulumNameList, markaKurulumImageList,this)
+                    binding!!.recyclerViewKurulum.adapter = adapter
 
+                    binding!!.mainProgressBar.visibility = View.GONE
 
-        binding!!.recyclerViewKurulum.layoutManager = LinearLayoutManager(requireContext())
-        adapter = KurulumRecyclerAdapter(markaKurulumArrayList,this)
-        binding!!.recyclerViewKurulum.adapter = adapter
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInAnonymously:failure", task.exception)
+
+                }
+            }
+
 
         binding!!.kurulumButton.setOnClickListener {
 
-            val action = KurulumFragmentDirections
-                .actionKurulumFragmentToMainFragment(savedArrayList.toTypedArray())
-            Navigation.findNavController(it).navigate(action)
+            val savedNameArray = savedNameArrayList.toTypedArray()
+            val savedImageArray = savedImageArrayList.toTypedArray()
+
+            if (savedNameArray.size > 0 ) {
+
+                val action = KurulumFragmentDirections
+                    .actionKurulumFragmentToMainFragment(savedNameArray,savedImageArray)
+                Navigation.findNavController(it).navigate(action)
+
+            } else {
+
+                Toast.makeText(requireContext(),resources.getString(R.string.en_az_bir_marka),Toast.LENGTH_SHORT).show()
+            }
 
         }
 
@@ -98,14 +131,25 @@ class KurulumFragment : Fragment(),OnTextClickListener {
 
                     if ( !value.isEmpty ) {
 
-                        markaKurulumArrayList.clear()
+                        markaKurulumNameList.clear()
+                        markaKurulumImageList.clear()
 
                         val documents = value.documents
                         for (document in documents) {
                             val name = document.get("name") as String?
+                            val image = document.get("image") as String?
                             if (name != null) {
-                                markaKurulumArrayList.add(name)
-                            }
+                                markaKurulumNameList.add(name)
+                                Log.i(TAG,"markaKurulumName: " + name)
+                            } else
+                                markaKurulumNameList.add("")
+
+                            if (image != null) {
+                                markaKurulumImageList.add(image)
+                                Log.i(TAG,"markaKurulumImage: " + image)
+                            } else
+                                markaKurulumImageList.add("")
+
                         }
                         adapter!!.notifyDataSetChanged()
 
@@ -123,23 +167,27 @@ class KurulumFragment : Fragment(),OnTextClickListener {
 
     }
 
-    override fun onTextClick(name: String, isChecked: Boolean) {
+    override fun onTextClick(name: String, url : String, isChecked: Boolean) {
         Log.i(TAG,"name: " +name)
-        Log.i(TAG,"is: " +isChecked)
+        Log.i(TAG,"isChecked: " +isChecked)
 
         if (isChecked){
-            savedArrayList.add(name)
-            Log.i(TAG,"savedArrayList-1: " + savedArrayList)
+            savedNameArrayList.add(name)
+            savedImageArrayList.add(url)
+            Log.i(TAG,"savedNameArrayList-1: " + savedNameArrayList)
+            Log.i(TAG,"savedImageArrayList-1: " + savedImageArrayList)
+
         } else {
-            savedArrayList.remove(name)
-            Log.i(TAG,"savedArrayList-2: " + savedArrayList)
+            savedNameArrayList.remove(name)
+            savedImageArrayList.remove(url)
+
+            Log.i(TAG,"savedNameArrayList-2: " + savedNameArrayList)
+            Log.i(TAG,"savedImageArrayList-2: " + savedImageArrayList)
+
         }
 
-        val set: Set<String> = HashSet(savedArrayList)
-        savedArrayList.clear()
-        savedArrayList.addAll(set)
-
-        Log.i(TAG,"savedArrayList-son: " + savedArrayList)
+        Log.i(TAG,"savedNameArrayList-son: " + savedNameArrayList)
+        Log.i(TAG,"savedImageArrayList-son: " + savedImageArrayList)
 
     }
 

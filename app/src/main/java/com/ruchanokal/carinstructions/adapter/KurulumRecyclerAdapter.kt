@@ -1,5 +1,6 @@
 package com.ruchanokal.carinstructions.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,11 +8,13 @@ import com.ruchanokal.carinstructions.databinding.KurulumRowBinding
 import com.ruchanokal.carinstructions.model.OnTextClickListener
 
 
-class KurulumRecyclerAdapter(val markaKurulumList : ArrayList<String>, val listener: OnTextClickListener): RecyclerView.Adapter<KurulumRecyclerAdapter.KurulumHolder>() {
+class KurulumRecyclerAdapter(val markaKurulumNameList : ArrayList<String>,
+                             val markaKurulumImageList : ArrayList<String>,
+                             val listener: OnTextClickListener)
+    : RecyclerView.Adapter<KurulumRecyclerAdapter.KurulumHolder>() {
 
 
-    private val tag = "KurulumRecyclerAdapter"
-    //private val savedArrayList = arrayListOf<String>()
+    private val TAG = "KurulumRecyclerAdapter"
 
 
     class KurulumHolder(val binding: KurulumRowBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -20,19 +23,21 @@ class KurulumRecyclerAdapter(val markaKurulumList : ArrayList<String>, val liste
 
 
     override fun getItemCount(): Int {
-        return markaKurulumList.size
+        return markaKurulumNameList.size
     }
 
     override fun onBindViewHolder(holder: KurulumHolder, position: Int) {
 
-        holder.binding.checkboxKurulum.text = markaKurulumList.get(position)
+
+        Log.i(TAG,"name " + position + "  "  + markaKurulumNameList.get(position))
+        Log.i(TAG,"image " + position + "  " + markaKurulumImageList.get(position))
+
+        holder.binding.checkboxKurulum.text = markaKurulumNameList.get(position)
 
         holder.binding.checkboxKurulum.setOnCheckedChangeListener { compoundButton, b ->
 
-            if (b){
-                listener?.onTextClick(compoundButton.text.toString(),b)
-            }else
-                listener?.onTextClick(compoundButton.text.toString(),b)
+           listener.onTextClick(compoundButton.text.toString(),markaKurulumImageList.get(position),b)
+
         }
 
 
