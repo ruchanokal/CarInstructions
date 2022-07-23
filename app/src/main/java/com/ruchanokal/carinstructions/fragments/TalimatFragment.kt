@@ -39,7 +39,7 @@ class TalimatFragment : Fragment() {
 
         arguments?.let {
 
-            val name = TalimatFragmentArgs.fromBundle(it).name
+            val name = TalimatFragmentArgs.fromBundle(it).ecm
             val lang = TalimatFragmentArgs.fromBundle(it).lang
 
 
